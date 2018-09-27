@@ -12,7 +12,7 @@ x=0
 #bp = data[:,1]
 mg=[]
 bp=[]
-while (x<1187):
+while (x<45000):    ##1187
     z = data[x]
     mg.append(z[0])
     bp.append(z[1])
@@ -25,3 +25,4 @@ plt.axes().set_aspect(0.3)
 plt.xlabel('G_BP - G_RP')
 plt.ylabel('M_G')
 plt.savefig('45000.png')
+print(mg)
