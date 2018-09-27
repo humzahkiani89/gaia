@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-hdulist = fits.open('45000.fits')
+hdulist = fits.open('../data/45000.fits')
 hdulist.info()
 data = hdulist[1].data
 x=0
@@ -25,4 +25,4 @@ plt.axes().set_aspect(0.3)
 plt.xlabel('G_BP - G_RP')
 plt.ylabel('M_G')
 plt.savefig('45000.png')
-print(mg)
+print("hello")
