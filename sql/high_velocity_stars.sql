@@ -1,5 +1,5 @@
 /* Directly copied from bottom of Gaia Data Release 2 Paper */
-SELECT TOP 5 phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM gaiadr2.gaia_source 
+SELECT phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM gaiadr2.gaia_source 
 WHERE parallax_over_error > 10 
 AND phot_g_mean_flux_over_error>50 
 AND phot_rp_mean_flux_over_error>20 
