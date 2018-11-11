@@ -20,7 +20,13 @@ AND phot_bp_rp_excess_factor > 1.0+0.015*power(phot_bp_mean_mag-phot_rp_mean_mag
 AND visibility_periods_used>8 
 AND astrometric_chi2_al/(astrometric_n_good_obs_al-5) <1.44*greatest(1,exp(-0.4*(phot_g_mean_mag-19.5)))
 AND power(radial_velocity,2) + power((4.74/parallax),2)*(power(pmra,2) + power(pmdec,2)) > 40000
-AND e_bp_min_rp_val < 0.015
+
+/* Extinction Value Filter */
+FROM gaiadr2.gaia_source AS g   
+  JOIN user_hkiani.ism AS ism ON ism.ll=round(g.l) AND ism.bb=round(g.b)   
+  WHERE  (ism.ww < 0 OR ism.ww<parallax)
+
+
 
 /* With interpretation of filters for Figure 21, panel C. (Tangential Velocity>200km/s) */
 SELECT phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM gaiadr2.gaia_source 
