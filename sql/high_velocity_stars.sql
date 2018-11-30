@@ -27,6 +27,19 @@ FROM gaiadr2.gaia_source AS g
   WHERE  (ism.ww < 0 OR ism.ww<parallax)
 
 
+/* With Extinction Value Filter Incorporated */
+SELECT phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM gaiadr2.gaia_source AS g 
+JOIN user_hkiani.ism AS ism ON ism.ll=round(g.l) AND ism.bb=round(g.b) 
+WHERE (ism.ww < 0 OR ism.ww 10 AND g.phot_g_mean_flux_over_error>50 
+AND g.phot_rp_mean_flux_over_error>20 
+AND g.phot_bp_mean_flux_over_error>20 
+AND g.phot_bp_rp_excess_factor < 1.3+0.06*power(g.phot_bp_mean_mag-g.phot_rp_mean_mag,2) 
+AND g.phot_bp_rp_excess_factor > 1.0+0.015*power(g.phot_bp_mean_mag-g.phot_rp_mean_mag,2) 
+AND g.visibility_periods_used>8 
+AND g.astrometric_chi2_al/(g.astrometric_n_good_obs_al-5) <1.44*greatest(1,exp(-0.4*(g.phot_g_mean_mag-19.5))) 
+AND power(g.radial_velocity,2) + power((4.74/g.parallax),2)*(power(g.pmra,2) + power(g.pmdec,2)) > 40000
+
+
 
 /* With interpretation of filters for Figure 21, panel C. (Tangential Velocity>200km/s) */
 SELECT phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM gaiadr2.gaia_source 
